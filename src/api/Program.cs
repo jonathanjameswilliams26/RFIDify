@@ -1,5 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
 global using RFIDify.Database;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using RFIDify.RFID.DataTypes;
 using RFIDify;
 
 var builder = WebApplication.CreateBuilder(args);

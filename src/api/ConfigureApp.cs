@@ -1,4 +1,6 @@
-﻿namespace RFIDify;
+﻿using RFIDify.Api;
+
+namespace RFIDify;
 
 public static class ConfigureApp
 {
@@ -11,6 +13,7 @@ public static class ConfigureApp
 		app.UseSwagger();
 		app.UseSwaggerUI();
 		app.UseHttpsRedirection();
+		app.UseEndpoints();
 	}
 
 	/// <summary>
