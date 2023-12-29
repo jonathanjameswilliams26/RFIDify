@@ -7,7 +7,8 @@ public static class Endpoints
 	public static void UseEndpoints(this WebApplication app)
 	{
 		var endpoints = app.MapGroup("")
-			.WithOpenApi();
+			.WithOpenApi()
+			.AddEndpointFilter<RequestLoggingFilter>();
 
 		endpoints.MapRFIDEndpoints();
 	}
