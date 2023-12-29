@@ -17,7 +17,8 @@ public static class Endpoints
 	{
 		var endpoints = app.MapGroup("/rfid")
 			.WithTags("RFID");
-		
+
+		endpoints.MapGetRFIDs();
 		endpoints.MapCreateOrUpdateRFID();
 	}
 }
