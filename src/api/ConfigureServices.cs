@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using RFIDify.Api.ExceptionHandlers;
+using Serilog;
 
 namespace RFIDify;
 
@@ -13,6 +14,7 @@ public static class ConfigureServices
 		builder.AddSwagger();
 		builder.AddDatabase();
 		builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+		builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 	}
 
 	private static void AddSerilog(this WebApplicationBuilder builder)

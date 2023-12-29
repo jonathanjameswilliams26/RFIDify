@@ -1,17 +1,8 @@
 ﻿namespace RFIDify.Api.Filters;
 
-public class RequestValidationFilter<TRequest> : IEndpointFilter
+public class RequestValidationFilter<TRequest>(IValidator<TRequest> validator, ILogger<RequestValidationFilter<TRequest>> logger) : IEndpointFilter
 {
-	private readonly IValidator<TRequest> validator;
-	private readonly ILogger<RequestValidationFilter<TRequest>> logger;
-
-	public RequestValidationFilter(IValidator<TRequest> validator, ILogger<RequestValidationFilter<TRequest>> logger)
-    {
-		this.validator = validator;
-		this.logger = logger;
-	}
-
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
+	public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
 	{
 		var request = context.Arguments.OfType<TRequest>().Single();
 		var path = context.HttpContext.Request.Path;
