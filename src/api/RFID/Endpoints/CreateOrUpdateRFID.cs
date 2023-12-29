@@ -2,11 +2,21 @@
 
 public record CreateOrUpdateRFIDRequest(string RFID, string SpotifyUri);
 
+public class CreateOrUpdateRFIDRequestValidator : AbstractValidator<CreateOrUpdateRFIDRequest>
+{
+	public CreateOrUpdateRFIDRequestValidator()
+	{
+		RuleFor(x => x.RFID).NotEmpty();
+		RuleFor(x => x.SpotifyUri).NotEmpty();
+	}
+}
+
 public static class CreateOrUpdateRFID
 {
 	public static void MapCreateOrUpdateRFID(this IEndpointRouteBuilder app) => app
 		.MapPost("/", Handle)
-		.WithSummary("Create or update an RFID tag");
+		.WithSummary("Create or update an RFID tag")
+		.WithRequestValidation<CreateOrUpdateRFIDRequest>();
 
 	private static async Task<Results<Ok, Created>> Handle(CreateOrUpdateRFIDRequest request, AppDbContext database, CancellationToken cancellationToken)
 	{

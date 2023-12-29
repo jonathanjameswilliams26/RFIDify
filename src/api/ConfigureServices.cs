@@ -9,6 +9,7 @@ public static class ConfigureServices
 	{
 		builder.AddSwagger();
 		builder.AddDatabase();
+		builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 	}
 
 	private static void AddSwagger(this WebApplicationBuilder builder)
