@@ -7,7 +7,22 @@ public static class ConfigureServices
 	/// </summary>
 	public static void AddServices(this WebApplicationBuilder builder)
 	{
+		builder.AddSwagger();
+		builder.AddDatabase();
+	}
+
+	private static void AddSwagger(this WebApplicationBuilder builder)
+	{
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen();
+	}
+
+	private static void AddDatabase(this WebApplicationBuilder builder)
+	{
+		builder.Services.AddDbContext<AppDbContext>(options =>
+		{
+			var connectionString = builder.Configuration.GetConnectionString("Default");
+			options.UseSqlite(connectionString);
+		});
 	}
 }
