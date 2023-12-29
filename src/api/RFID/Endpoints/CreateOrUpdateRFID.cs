@@ -1,13 +1,21 @@
-﻿namespace RFIDify.RFID.Endpoints;
+﻿using System.Text.RegularExpressions;
+
+namespace RFIDify.RFID.Endpoints;
 
 public record CreateOrUpdateRFIDRequest(string RFID, string SpotifyUri);
 
-public class CreateOrUpdateRFIDRequestValidator : AbstractValidator<CreateOrUpdateRFIDRequest>
+public partial class CreateOrUpdateRFIDRequestValidator : AbstractValidator<CreateOrUpdateRFIDRequest>
 {
+	[GeneratedRegex("spotify:(playlist|album|track|artist):[a-zA-Z0-9]")]
+	private static partial Regex SpotifyUriRegex();
+
 	public CreateOrUpdateRFIDRequestValidator()
 	{
 		RuleFor(x => x.RFID).NotEmpty();
-		RuleFor(x => x.SpotifyUri).NotEmpty();
+		RuleFor(x => x.SpotifyUri)
+			.NotEmpty()
+			.Must(x => SpotifyUriRegex().IsMatch(x))
+			.WithMessage("Must in Spotify Uri format. e.g. spotify:track:id");
 	}
 }
 
