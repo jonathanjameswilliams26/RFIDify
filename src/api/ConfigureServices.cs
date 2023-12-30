@@ -1,4 +1,5 @@
 ﻿using RFIDify.Api.ExceptionHandlers;
+using RFIDify.Spotify.Services;
 using Serilog;
 
 namespace RFIDify;
@@ -15,6 +16,7 @@ public static class ConfigureServices
 		builder.AddDatabase();
 		builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 		builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
+		builder.AddSpotify();
 	}
 
 	private static void AddSerilog(this WebApplicationBuilder builder)
@@ -39,6 +41,14 @@ public static class ConfigureServices
 		{
 			var connectionString = builder.Configuration.GetConnectionString("Default");
 			options.UseSqlite(connectionString);
+		});
+	}
+
+	private static void AddSpotify(this WebApplicationBuilder builder)
+	{
+		builder.Services.AddHttpClient<ISpotifyAccountsApi, SpotifyAccountsApi>(client =>
+		{
+			client.BaseAddress = new Uri("https://accounts.spotify.com");
 		});
 	}
 }

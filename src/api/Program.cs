@@ -4,6 +4,8 @@ global using Microsoft.EntityFrameworkCore;
 global using RFIDify.Api.Filters;
 global using RFIDify.Database;
 global using RFIDify.RFID.DataTypes;
+global using RFIDify.Spotify.DataTypes;
+global using RFIDify.Spotify.Services;
 using RFIDify;
 
 var builder = WebApplication.CreateBuilder(args);

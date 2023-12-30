@@ -1,4 +1,5 @@
 ﻿using RFIDify.RFID.Endpoints;
+using RFIDify.Spotify.Endpoints;
 
 namespace RFIDify.Api;
 
@@ -11,6 +12,7 @@ public static class Endpoints
 			.AddEndpointFilter<RequestLoggingFilter>();
 
 		endpoints.MapRFIDEndpoints();
+		endpoints.MapSpotifyEndpoints();
 	}
 
 	private static void MapRFIDEndpoints(this IEndpointRouteBuilder app)
@@ -21,5 +23,13 @@ public static class Endpoints
 		endpoints.MapGetRFIDs();
 		endpoints.MapCreateOrUpdateRFID();
 		endpoints.MapScanRFID();
+	}
+
+	private static void MapSpotifyEndpoints(this IEndpointRouteBuilder app)
+	{
+		var endpoints = app.MapGroup("/spotify")
+			.WithTags("Spotify");
+
+		endpoints.MapSetSpotifyCredentials();
 	}
 }
