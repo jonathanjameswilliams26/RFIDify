@@ -48,9 +48,18 @@ public static class ConfigureServices
 
 	private static void AddSpotify(this WebApplicationBuilder builder)
 	{
+		builder.Services.AddTransient<ISpotifyAccessTokenProvider, SpotifyAccessTokenProvider>();
+		builder.Services.AddTransient<SpotifyWebApiAccessTokenHandler>();
+
 		builder.Services.AddHttpClient<ISpotifyAccountsApi, SpotifyAccountsApi>(client =>
 		{
-			client.BaseAddress = new Uri("https://accounts.spotify.com");
+			client.BaseAddress = new Uri(builder.Configuration["Spotify:AccountsApiBaseUrl"]!);
 		});
+
+		builder.Services.AddHttpClient<ISpotifyWebApi, SpotifyWebApi>(client =>
+		{
+			client.BaseAddress = new Uri(builder.Configuration["Spotify:WebApiBaseUrl"]!);
+		})
+		.AddHttpMessageHandler<SpotifyWebApiAccessTokenHandler>();
 	}
 }

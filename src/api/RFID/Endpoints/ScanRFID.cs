@@ -17,7 +17,7 @@ public static class ScanRFID
 		.WithSummary("Scan RFID tag and start playing on Spotify")
 		.WithRequestValidation<ScanRFIDRequest>();
 
-	private static async Task<Results<Ok, NotFound>> Handle(ScanRFIDRequest request, AppDbContext database, CancellationToken cancellationToken)
+	private static async Task<Results<Ok, NotFound>> Handle(ScanRFIDRequest request, AppDbContext database, ISpotifyWebApi spotifyApi, CancellationToken cancellationToken)
 	{
 		var rfid = await database.RFIDs
 			.AsNoTracking()
@@ -28,7 +28,7 @@ public static class ScanRFID
 			return TypedResults.NotFound();
 		}
 
-		// TODO: Start playing on Spotify
+		await spotifyApi.Play(rfid, cancellationToken);
 		return TypedResults.Ok();
 	}
 }
