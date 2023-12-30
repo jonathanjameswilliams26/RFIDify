@@ -20,7 +20,7 @@ public static class SpotifyAuthorisationCallback
 		// Confirm state matches
 		var credentials = await database.SpotifyCredentials
 			.AsNoTracking()
-			.FirstOrDefaultAsync(x => x.State == request.State, cancellationToken);
+			.SingleOrDefaultAsync(x => x.State == request.State, cancellationToken);
 		
 		if (credentials is null)
 		{
