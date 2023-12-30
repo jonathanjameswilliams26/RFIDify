@@ -1,4 +1,5 @@
 ﻿using RFIDify.Api.ExceptionHandlers;
+using RFIDify.Shared.Services;
 using RFIDify.Spotify.Services;
 using Serilog;
 
@@ -17,6 +18,7 @@ public static class ConfigureServices
 		builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 		builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 		builder.AddSpotify();
+		builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 	}
 
 	private static void AddSerilog(this WebApplicationBuilder builder)

@@ -31,5 +31,6 @@ public static class Endpoints
 			.WithTags("Spotify");
 
 		endpoints.MapSetSpotifyCredentials();
+		endpoints.MapSpotifyAuthorisationCallback();
 	}
 }
